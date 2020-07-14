@@ -7,10 +7,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <title>Document</title>
+    <style>
+        /* 闪动问题 */
+        [v-clock]{
+            display: none;
+        }
+    
+    </style>
 </head>
 
 <body>
-    <div id="app">
+    <!-- 用v-clock解决闪动问题 -->
+    <!-- 大概原理就是通过样式隐藏，替换好值之后再显示最终的值 -->
+    <div id="app" v-clock>
         <div>{{msg}}</div>
         <div> {{msg +'wk'}} </div>
         <div>{{ 1 + 2 }}</div>
