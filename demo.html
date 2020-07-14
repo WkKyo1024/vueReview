@@ -15,21 +15,19 @@
 <body>
     <div id="app" v-clock>
         <div>{{msg}}</div>
-        <!-- 使用v-test，用这个没有闪动问题 -->
-        <div v-text='msg'></div>
-        <!-- 使用v-html，有安全问题， -->
-        <div v-html='msg1'></div>
-        <!-- 视同v-pre，跳过编译过程 -->
-        <div v-pre>{{msg}}</div>
+        <!-- 只渲染元素和组件一次。随后的重新渲染，
+            元素/组件及其所有的子节点将被视为静态内容并跳过。
+            这可以用于优化更新性能 -->
+        <div v-once>{{once}}</div>
     </div>
 
 </body>
 <script>
-    new Vue({
+    var vm = new Vue({
         el: "#app",
         data: {
             msg: 'hello vue',
-            msg1: '<h1>html<h1>'
+            once: 'v-once'
         }
     })
 </script>
