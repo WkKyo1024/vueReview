@@ -14,40 +14,24 @@
 
 <body>
     <div id="app">
-        <form>
-            <div>
-                姓名：<input type="text" v-on:keyup.f1="handle1" v-model='uname' placeholder="请输入姓名">
-            </div>
-            <div>
-                密码：<input type="password" v-on:keyup.enter="handle" autocomplete="" v-model='upass' placeholder="请输入密码">
-            </div>
-            <div>
-                <button type="text" v-on:click.prevent='handle'>提交</button>
-            </div>
-        </form>
+        <!-- v-bind指令用法 -->
+        <a v-bind:href="urls">百度</a>
+        <!-- 缩写 -->
+        <a :href="urls">百度</a>
+        <button @click="qiehuan">切换</button>
     </div>
 
 </body>
 <script>
-    // 自定义按键修饰符别名
-    Vue.config.keyCodes.f1 = 65;
-    Vue.config.keyCodes = {
-        f2: 113
-    }
     var vm = new Vue({
         el: "#app",
         data: {
-            uname: "",
-            upass: ""
+            urls: "https://www.baidu.com"
         },
         // methods 方法 函数要定义在这里面
         methods: {
-            handle: function () {
-                console.log(this.uname, this.upass)
-            },
-            handle1: function () {
-                console.log(this.uname)
-                this.uname = ""
+            qiehuan: function () {
+                this.urls == "https://www.baidu.com" ? this.urls = "https://www.bilibili.com" : this.urls = "https://www.baidu.com"
             }
         }
     })
