@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .tab div {
+            width: 300px;
+            height: 400px;
+            display: none;
+        }
+
+        .tab div img {
+            width: 300px;
+            height: 400px;
+
+        }
+
+        * {
+            list-style: none;
+        }
+
+        ul li {
+            float: left;
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        .tab div.current {
+            display: block;
+            clear: both;
+        }
+
+        .active {
+            background: yellow;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="tab">
+            <ul>
+                <li :class='currentIndex==index?"active":""' v-bind:key='item.id' v-for='(item,index) in list'
+                    v-text='item.title' @click='change(index)'></li>
+            </ul>
+
+            <div :class='currentIndex==index?"current":""' :key='item.id' v-for='(item,index) in list'>
+                <img :src="item.path" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                currentIndex: 0,//默认选项卡索引
+                list: [
+                    {
+                        id: 1,
+                        title: 'one',
+                        path: './img/demo/2020-02-10-083124.jpg'
+                    },
+                    {
+                        id: 2,
+                        title: "two",
+                        path: './img/demo/2020-02-10-083126.jpg'
+                    },
+                    {
+                        id: 3,
+                        title: "three",
+                        path: './img/demo/2020-02-10-083130.jpg'
+                    }
+                ]
+            },
+            methods: {
+                change: function (index) {
+                    //选项卡切换
+                    this.currentIndex = index;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
