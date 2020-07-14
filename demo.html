@@ -14,11 +14,14 @@
 
 <body>
     <div id="app">
-        <!-- v-bind指令用法 -->
-        <a v-bind:href="urls">百度</a>
-        <!-- 缩写 -->
-        <a :href="urls">百度</a>
-        <button @click="qiehuan">切换</button>
+        <div>{{shuju}}</div>
+        <!-- 使用v-bind实现双向数据绑定 -->
+        <!-- v-model指令的本质 -->
+        <input type="text" v-bind:value="shuju" v-on:input="handle">
+        <div>另一个写法</div>
+        <input type="text" v-bind:value="shuju" v-on:input="shuju=$event.target.value">
+        <div>用v-model</div>
+        <input type="text" v-model="shuju">
     </div>
 
 </body>
@@ -26,12 +29,12 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            urls: "https://www.baidu.com"
+            shuju: "nihao"
         },
         // methods 方法 函数要定义在这里面
         methods: {
-            qiehuan: function () {
-                this.urls == "https://www.baidu.com" ? this.urls = "https://www.bilibili.com" : this.urls = "https://www.baidu.com"
+            handle: function (event) {
+                this.shuju = event.target.value;
             }
         }
     })
