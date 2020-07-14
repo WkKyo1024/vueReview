@@ -8,20 +8,47 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <title>Document</title>
     <style>
+        .av {
+            border: 1px solid red;
+            width: 80px;
+            height: 80px;
+        }
 
+        .av1 {
+            background-color: yellow;
+        }
+
+        .av2 {
+            border-radius: 50%;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <div>{{shuju}}</div>
-        <!-- 使用v-bind实现双向数据绑定 -->
-        <!-- v-model指令的本质 -->
-        <input type="text" v-bind:value="shuju" v-on:input="handle">
-        <div>另一个写法</div>
-        <input type="text" v-bind:value="shuju" v-on:input="shuju=$event.target.value">
-        <div>用v-model</div>
-        <input type="text" v-model="shuju">
+        <div>
+            <button v-on:click='handle'>
+                切换
+            </button>
+        </div>
+        <!-- 对象写法 -->
+        <div v-bind:class="{av:isAv,av1:isAv1}">a</div>
+        <div>绑定的数据对象不必内联定义在模板里:</div>
+        <div>
+            <button v-on:click='handle'>
+                切换
+            </button>
+        </div>
+        <div v-bind:class="classObject">s</div>
+
+        <div>
+            <button v-on:click='handle'>
+                切换
+            </button>
+        </div>
+        <!-- 数组写法 -->
+        <div v-bind:class="[a,b,c]">s</div>
+
     </div>
 
 </body>
@@ -29,12 +56,23 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            shuju: "nihao"
+            isAv: true,
+            isAv1: true,
+            classObject: {
+                av: true,
+                av1: false,
+                av2: true
+            },
+            a:"av",
+            b:"av1",
+            c:"av2"
         },
         // methods 方法 函数要定义在这里面
         methods: {
             handle: function (event) {
-                this.shuju = event.target.value;
+                this.isAv = !this.isAv;
+                this.classObject.av=!this.classObject.av;
+                this.a==""? this.a="av" : this.a="";
             }
         }
     })
