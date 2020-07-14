@@ -14,10 +14,22 @@
 
 <body>
     <div id="app">
-        <div>{{msg}}</div>
-        <!-- v-model双向数据绑定 -->
+        <div>{{num}}</div>
+        <!-- v-on:click 一种写法 -->
         <div>
-            <input type="text" v-model='msg'>
+            <button v-on:click='num++'>{{num}}</button>
+        </div>
+        <!-- @click 另一种写法 -->
+        <div>
+            <button @click='num++'>{{num}}</button>
+        </div>
+        <!-- @click 另一种写法 -->
+        <div>
+            <button @click='handle'>{{num}}</button>
+        </div>
+        <!-- @click 另一种写法 -->
+        <div>
+            <button @click='handle()'>{{num}}</button>
         </div>
     </div>
 
@@ -26,8 +38,15 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            msg: 'hello vue',
-            once: 'v-once'
+            num: 0
+        },
+        // methods 方法 函数要定义在这里面
+        methods: {
+            handle: function () {
+                // 这里的this是vue的实例对象
+                console.log(this);
+                this.num++;
+            }
         }
     })
 </script>
