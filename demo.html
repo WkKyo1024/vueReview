@@ -8,28 +8,28 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <title>Document</title>
     <style>
-        /* 闪动问题 */
-        [v-clock]{
-            display: none;
-        }
-    
+
     </style>
 </head>
 
 <body>
-    <!-- 用v-clock解决闪动问题 -->
-    <!-- 大概原理就是通过样式隐藏，替换好值之后再显示最终的值 -->
     <div id="app" v-clock>
         <div>{{msg}}</div>
-        <div> {{msg +'wk'}} </div>
-        <div>{{ 1 + 2 }}</div>
+        <!-- 使用v-test，用这个没有闪动问题 -->
+        <div v-text='msg'></div>
+        <!-- 使用v-html，有安全问题， -->
+        <div v-html='msg1'></div>
+        <!-- 视同v-pre，跳过编译过程 -->
+        <div v-pre>{{msg}}</div>
     </div>
+
 </body>
 <script>
     new Vue({
         el: "#app",
         data: {
-            msg: 'hello vue'
+            msg: 'hello vue',
+            msg1: '<h1>html<h1>'
         }
     })
 </script>
