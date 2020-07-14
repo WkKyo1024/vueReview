@@ -33,6 +33,12 @@
             <!-- key的作用，帮助vue区分不同的元素，从而提高性能 -->
             <li v-bind:key='item.id' v-for='item in myFruits' v-text='item.ename+item.cname'></li>
         </ul>
+        <div>大于<input type="text" v-model=myprice>价格的水果</div>
+        <ul>
+            
+            <li v-if='value.price>myprice' v-for='(value,key,index) in myFruits' v-text="value.cname+'**'+value.price">
+            </li>
+        </ul>
     </div>
 
 </body>
@@ -41,22 +47,26 @@
         el: "#app",
         data: {
             fruits: ["apple", "orange", "banana"],
+            myprice:51,
             myFruits: [
                 {
 
                     id: 1,
                     ename: 'apple',
-                    cname: '苹果'
+                    cname: '苹果',
+                    price: 50
                 },
                 {
                     id: 2,
                     ename: 'orange',
-                    cname: '橘子'
+                    cname: '橘子',
+                    price: 150
                 },
                 {
                     id: 3,
                     ename: 'banana',
-                    cname: '香蕉'
+                    cname: '香蕉',
+                    price: 250
                 }
             ]
         },
