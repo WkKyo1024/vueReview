@@ -26,29 +26,13 @@
 
 <body>
     <div id="app">
-        <div>
-            <button v-on:click='handle'>
-                切换
-            </button>
-        </div>
-        <!-- 对象写法 -->
-        <div v-bind:class="{av:isAv,av1:isAv1}">a</div>
-        <div>绑定的数据对象不必内联定义在模板里:</div>
-        <div>
-            <button v-on:click='handle'>
-                切换
-            </button>
-        </div>
-        <div v-bind:class="classObject">s</div>
+        <div>你的分数 <input type="text" v-model='score'></div>
+        <div v-if='score>=90'>优秀</div>
+        <div v-else-if='score>=60'>及格</div>
+        <div v-else=''>不及格</div>
 
-        <div>
-            <button v-on:click='handle'>
-                切换
-            </button>
-        </div>
-        <!-- 数组写法 -->
-        <div v-bind:class="[a,b,c]">s</div>
-
+        <div v-show="flag">测试v-show</div>
+        <button @click="handle">点击</button>
     </div>
 
 </body>
@@ -56,23 +40,13 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            isAv: true,
-            isAv1: true,
-            classObject: {
-                av: true,
-                av1: false,
-                av2: true
-            },
-            a:"av",
-            b:"av1",
-            c:"av2"
+           score:59,
+           flag:true
         },
         // methods 方法 函数要定义在这里面
         methods: {
-            handle: function (event) {
-                this.isAv = !this.isAv;
-                this.classObject.av=!this.classObject.av;
-                this.a==""? this.a="av" : this.a="";
+            handle: function () {
+                this.flag=!this.flag;
             }
         }
     })
