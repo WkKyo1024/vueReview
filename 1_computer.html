@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>简易计算器</h1>
+        <div>
+            数字A: <input type="text" v-model='num1'>
+        </div>
+        <div>
+            符号：
+            <select name="" id="" v-model="fuhao">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+        </div>
+        <div>
+            数字B: <input type="text" v-model='num2'>
+        </div>
+        <div>
+            <button v-on:click='dos'>计算</button>
+        </div>
+        <div>
+            结果: <span v-text='all'></span>
+        </div>
+    </div>
+
+    <script>
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                num1: "",
+                num2: "",
+                all: "0",
+                fuhao: "+"
+            },
+            methods: {
+                dos: function () {
+                    console.log(10)
+                    if (this.fuhao == "+") {
+                        this.all =Number(this.num1)  + Number(this.num2);
+                    } else if (this.fuhao == "-") {
+                        this.all = this.num1 - this.num2;
+                    } else if (this.fuhao == "*") {
+                        this.all = this.num1 * this.num2;
+                    } else if (this.fuhao == "/") {
+                        this.all = this.num1 / this.num2;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
