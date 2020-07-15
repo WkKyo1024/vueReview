@@ -8,73 +8,35 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <title>Document</title>
     <style>
-        .av {
-            border: 1px solid red;
-            width: 80px;
-            height: 80px;
-        }
 
-        .av1 {
-            background-color: yellow;
-        }
-
-        .av2 {
-            border-radius: 50%;
-        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <div>水果列表</div>
-        <ul>
-            <li v-for='item in fruits' v-text='item'></li>
-            <li v-for='(item,index) in fruits' v-text="item+'****'+index"></li>
-            <!-- key的作用，帮助vue区分不同的元素，从而提高性能 -->
-            <li v-bind:key='item.id' v-for='item in myFruits' v-text='item.ename+item.cname'></li>
-        </ul>
-        <div>大于<input type="text" v-model=myprice>价格的水果</div>
-        <ul>
-            
-            <li v-if='value.price>myprice' v-for='(value,key,index) in myFruits' v-text="value.cname+'**'+value.price">
-            </li>
-        </ul>
+        <div>
+            <input type="text" v-focus>
+            <input type="text">
+        </div>
     </div>
 
 </body>
 <script>
+    //自定义指令
+    Vue.directive('focus', {
+        // 当被绑定的元素插入到 DOM 中时……
+        inserted: function (el) {
+            el.focus();
+        }
+    });
     var vm = new Vue({
         el: "#app",
         data: {
-            fruits: ["apple", "orange", "banana"],
-            myprice:51,
-            myFruits: [
-                {
 
-                    id: 1,
-                    ename: 'apple',
-                    cname: '苹果',
-                    price: 50
-                },
-                {
-                    id: 2,
-                    ename: 'orange',
-                    cname: '橘子',
-                    price: 150
-                },
-                {
-                    id: 3,
-                    ename: 'banana',
-                    cname: '香蕉',
-                    price: 250
-                }
-            ]
         },
         // methods 方法 函数要定义在这里面
         methods: {
-            handle: function () {
-                this.flag = !this.flag;
-            }
+
         }
     })
 </script>
