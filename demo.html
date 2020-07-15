@@ -15,28 +15,44 @@
 <body>
     <div id="app">
         <div>
-            <input type="text" v-focus>
-            <input type="text">
+            <input type="text" v-color='msg' v-focus>
         </div>
     </div>
 
 </body>
 <script>
-    //自定义指令
-    Vue.directive('focus', {
-        // 当被绑定的元素插入到 DOM 中时……
-        inserted: function (el) {
-            el.focus();
-        }
-    });
+    //自定义全局指令
+    // Vue.directive('color', {
+    //     // 当被绑定的元素插入到 DOM 中时……
+    //     bind: function (el, binding) {
+    //         console.log(binding.value.msg1)
+    //         el.style.background = binding.value.msg;
+    //     }
+    // });
     var vm = new Vue({
         el: "#app",
         data: {
-
+            msg: {
+                msg: 'red',
+                msg1: 'blue'
+            }
         },
         // methods 方法 函数要定义在这里面
         methods: {
-
+          
+        },
+        directives: {
+            color: {
+                bind: function (el, binding) {
+                    console.log(binding.value.msg1)
+                    el.style.background = binding.value.msg;
+                }
+            },
+            focus:{
+                inserted:function(el){
+                    el.focus();
+                }
+            }
         }
     })
 </script>
