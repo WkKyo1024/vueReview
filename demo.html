@@ -13,47 +13,37 @@
 </head>
 
 <body>
+    <!-- methods(方法)和computed(计算属性)的区别 -->
+    <!-- 计算属性是基于他们的依赖进行缓存的 -->
+    <!-- 方法不存在缓存 -->
     <div id="app">
-        <div>
-            <input type="text" v-color='msg' v-focus>
-        </div>
+        <div v-text='reverseString'></div>
+        <div v-text="reverseString"></div>
+        <div v-text='reverseMessage()'></div>
+        <div v-text='reverseMessage()'></div>
+
     </div>
 
 </body>
 <script>
-    //自定义全局指令
-    // Vue.directive('color', {
-    //     // 当被绑定的元素插入到 DOM 中时……
-    //     bind: function (el, binding) {
-    //         console.log(binding.value.msg1)
-    //         el.style.background = binding.value.msg;
-    //     }
-    // });
     var vm = new Vue({
         el: "#app",
         data: {
-            msg: {
-                msg: 'red',
-                msg1: 'blue'
-            }
+            msg: 'hello world'
         },
         // methods 方法 函数要定义在这里面
         methods: {
-          
+            reverseMessage:function(){
+                return this.msg.split('').reverse().join('');
+            }
         },
-        directives: {
-            color: {
-                bind: function (el, binding) {
-                    console.log(binding.value.msg1)
-                    el.style.background = binding.value.msg;
-                }
-            },
-            focus:{
-                inserted:function(el){
-                    el.focus();
-                }
+        //计算属性
+        computed: {
+            reverseString: function () {
+                return this.msg.split('').reverse().join('');
             }
         }
+
     })
 </script>
 
