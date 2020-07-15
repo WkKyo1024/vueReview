@@ -13,15 +13,11 @@
 </head>
 
 <body>
-    <!-- methods(方法)和computed(计算属性)的区别 -->
-    <!-- 计算属性是基于他们的依赖进行缓存的 -->
-    <!-- 方法不存在缓存 -->
     <div id="app">
-        <div v-text='reverseString'></div>
-        <div v-text="reverseString"></div>
-        <div v-text='reverseMessage()'></div>
-        <div v-text='reverseMessage()'></div>
-
+        <div><input type="text" v-model='firstname'></div>
+        <div><input type="text" v-model='lastname'></div>
+        <div v-text='fullname'></div>
+        <div>{{all}}</div>
     </div>
 
 </body>
@@ -29,18 +25,28 @@
     var vm = new Vue({
         el: "#app",
         data: {
-            msg: 'hello world'
+            fullname: 'hello world',
+            firstname: 'hello',
+            lastname: 'world'
         },
         // methods 方法 函数要定义在这里面
         methods: {
-            reverseMessage:function(){
-                return this.msg.split('').reverse().join('');
-            }
+
         },
         //计算属性
         computed: {
-            reverseString: function () {
-                return this.msg.split('').reverse().join('');
+            all: function () {
+                return this.fullname = this.firstname + ' ' + this.lastname;
+            }
+        },
+        //侦听器
+        watch: {
+            //val是改变后的值
+            firstname:function(val){
+                this.fullname = val + ' ' + this.lastname;
+            },
+            lastname:function(val){
+                this.fullname = this.firstname + ' ' + val;
             }
         }
 
