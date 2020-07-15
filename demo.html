@@ -14,39 +14,43 @@
 
 <body>
     <div id="app">
-        <div><input type="text" v-model='firstname'></div>
-        <div><input type="text" v-model='lastname'></div>
-        <div v-text='fullname'></div>
-        <div>{{all}}</div>
+        <div>用户名：<input type="text" v-model.lazy='yname'></div>
+        <span v-text='tip'></span>
     </div>
 
 </body>
 <script>
+    /*
+        侦听器
+        1、采用侦听器监听用户名的变化
+        2、调用后台接口进行验证
+        3、根据验证的结果调整提示信息
+    */
     var vm = new Vue({
         el: "#app",
         data: {
-            fullname: 'hello world',
-            firstname: 'hello',
-            lastname: 'world'
+            yname: '',
+            tip: ''
         },
-        // methods 方法 函数要定义在这里面
-        methods: {
-
-        },
-        //计算属性
-        computed: {
-            all: function () {
-                return this.fullname = this.firstname + ' ' + this.lastname;
+        methods:{
+            checkName:function(yname){
+                //调用接口
+                //模拟接口的调用
+                let that = this;
+                setTimeout(function(){
+                    if(yname=='admin'){
+                        that.tip='用户名已经存在！';
+                    }else{
+                        that.tip='用户名可以使用';
+                    }
+                },2000)
             }
         },
-        //侦听器
         watch: {
-            //val是改变后的值
-            firstname:function(val){
-                this.fullname = val + ' ' + this.lastname;
-            },
-            lastname:function(val){
-                this.fullname = this.firstname + ' ' + val;
+            yname: function (val) {
+                //调用后台接口验证用户名的合法性
+                this.checkName(val);
+                this.tip='正在验证';
             }
         }
 
