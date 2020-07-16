@@ -14,81 +14,27 @@
 
 <body>
     <div id="app">
-        <div><button @click='handle'>销毁</button></div>
-        <test-tom></test-tom>
-        <test-jerry></test-jerry>
-
+        <cha-cao>卢本伟</cha-cao>
+        <cha-cao>奥利给</cha-cao>
+        <cha-cao></cha-cao>
     </div>
     <script>
-        /*
-            兄弟组件之间数据的传递
-        */
-        //提供事件中心
-        var hub = new Vue();
-        Vue.component('test-tom', {
-            props: ['parr'],
-            data: function () {
-                return {
-                    num: 0
-                }
-            },
+        Vue.component('cha-cao', {
             template: `
                 <div>
-                    <div>TOM:{{num}}</div>
-                    <div>
-                        <button @click='handle'>点击</button>
-                    </div>
+                    <div>TOM</div>
+                    <slot>哈哈哈哈</slot>
                 </div>
-            `,
-            methods: {
-                handle: function () {
-                    //触发兄弟组件的事件
-                    hub.$emit('jerry-event',1)
-                }
-            },
-            mounted: function () {
-                hub.$on('tom-event', (val) => {
-                    this.num += val;
-                })
-            }
-        });
-        Vue.component('test-jerry', {
-            props: ['parr'],
-            data: function () {
-                return {
-                    num: 0
-                }
-            },
-            template: `
-                <div>
-                    <div>JERRY:{{num}}</div>
-                    <div>
-                        <button @click='handle'>点击</button>
-                    </div>
-                </div>
-            `,
-            methods: {
-                handle: function () {
-                    hub.$emit('tom-event',3)
-                }
-            },
-            mounted: function () {
-                hub.$on('jerry-event', (val) => {
-                    this.num += val;
-                })
-            }
-        });
+            `
+        })
+           
         var vm = new Vue({
             el: "#app",
             data: {
                 
             },
             methods: {
-                handle: function () {
-                    //销毁
-                    hub.$off('tom-event');
-                    hub.$off('jerry-event');
-                }
+                
             }
 
         })
