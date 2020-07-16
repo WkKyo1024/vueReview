@@ -8,59 +8,57 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Document</title>
     <style>
-
+        .active{
+            color: rgb(201, 201, 64);
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <cha-cao>卢本伟</cha-cao>
+
         <hr>
-        <cha-cao>
-            <!-- 注意语法 v-slot:header -->
-            <template v-slot:header>
-                <div>
-                    我是h
-                </div>
-                <div>
-                    我是h
-                </div>
-            </template>
-
-            牛鼻
-            <p>fsafasj</p>
-
-            <template v-slot:footer>
-                <div>
-                    搞个鸡
-                </div>
-            </template>
+        <cha-cao :list='list'>
+           <template v-slot:default='slotProps'>
+               <div v-if='slotProps.info.id==2' class="active">
+                   {{slotProps.info.name}}
+               </div>
+           </template>
         </cha-cao>
 
     </div>
     <script>
         //具名插槽基本用法
         Vue.component('cha-cao', {
+            props: ['list'],
             template: `
-                <div>
-                    <header>
-                        <slot name='header'>headder</slot>
-                    </header>
-                    <main>
-                        <slot>哈哈哈哈</slot>
-                    </main>
-                    <footer>
-                        <slot name='footer'>footter</slot>
-                    </footer>
-                    
-                </div>
+            <div>        
+                <ul>
+                     <li :key='item.id' v-for='item in list'>
+                            <slot :info='item'>{{item.name}}</slot>
+                     </li>
+                </ul>
+            </div>
             `
         })
 
         var vm = new Vue({
             el: "#app",
             data: {
-
+                list: [
+                    {
+                        id: 1,
+                        name: 'apple'
+                    },
+                    {
+                        id: 2,
+                        name: 'orange'
+                    },
+                    {
+                        id: 3,
+                        name: 'grape'
+                    }
+                ]
             },
             methods: {
 
