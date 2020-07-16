@@ -15,7 +15,7 @@
 <body>
     <div id="app">
         <div :style='{fontSize:fontSize+"px"}'>{{pmsg}}</div>
-        <menu-item :parr='parr' v-on:larger-font='handle'></menu-item>
+        <menu-item :parr='parr' v-on:larger-font='handle($event)'></menu-item>
 
     </div>
     <script>
@@ -35,7 +35,9 @@
                     //这里不推荐下面的写法 prop要遵守单向数据流动规则
                     <button @click='parr.push("four")'>添加</button>
                     <hr>
-                    <button @click='$emit("larger-font")'>变大</button>
+                    <button @click='$emit("larger-font",2)'>变大2</button>
+                    <button @click='$emit("larger-font",10)'>变大10</button>
+                    <button @click='$emit("larger-font",-2)'>变小2</button>
                 </div>
             `
         })
@@ -47,9 +49,8 @@
                 fontSize: 10
             },
             methods: {
-                handle: function () {
-                    console.log(2)
-                    this.fontSize += 3;
+                handle: function (val) {
+                    this.fontSize += val;
                 }
             }
         })
