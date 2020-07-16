@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Document</title>
     <style>
 
@@ -14,50 +14,29 @@
 
 <body>
     <div id="app">
-        <h-w></h-w>
-        <h-k></h-k>
-        <hr>
-        <w-w></w-w>
+        <menu-item title="niha" :hao='pi'></menu-item>
+        <menu-item :title="msg1" :likes='52' ok="niu"> </menu-item>
     </div>
     <script>
-        Vue.component('w-w',{
-            data:function(){
+        Vue.component('menu-item', {
+            props: ['title', 'likes','ok','hao'],
+            data: function () {
                 return {
-                    msg:'helloWorld'
+                    msg: 'nima'
                 }
             },
-            template:`
-            <div>hei afasfasfasfs{{msg}}****</div>
+            template: `
+                <div>{{msg+'**'+title+'**'+likes+'**'+ok+'**'+hao}}</div>
             `
         })
-        var HelloWorld ={
-            data:function(){
-                return {
-                    msg:'helloworld'
-                }
-            },
-            template:`
-            <div>hei {{msg}}</div>
-            `
-        }
-        var HelloWorld1 ={
-            data:function(){
-                return {
-                    msg:'hellowk'
-                }
-            },
-            template:`
-            <div>heihei {{msg}}da<w-w></w-w></div>
-            `
-        }
         var vm = new Vue({
             el: "#app",
             data: {
-
+                msg1: 'haha',
+                pi:'gepi'
             },
-            components:{
-                'h-w':HelloWorld,
-                'h-k':HelloWorld1
+            components: {
+
             }
         })
     </script>
