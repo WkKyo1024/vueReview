@@ -14,45 +14,83 @@
 
 <body>
     <div id="app">
-        <div :style='{fontSize:fontSize+"px"}'>{{pmsg}}</div>
-        <menu-item :parr='parr' v-on:larger-font='handle($event)'></menu-item>
+        <div><button @click='handle'>销毁</button></div>
+        <test-tom></test-tom>
+        <test-jerry></test-jerry>
 
     </div>
     <script>
-        // prop要遵守单向数据流动规则
-        Vue.component('menu-item', {
+        /*
+            兄弟组件之间数据的传递
+        */
+        //提供事件中心
+        var hub = new Vue();
+        Vue.component('test-tom', {
             props: ['parr'],
             data: function () {
                 return {
-                    msg: 'nima'
+                    num: 0
                 }
             },
             template: `
                 <div>
-                    <ul>
-                        <li :key='index' v-for='(item,index) in parr'>{{item}}</li>
-                    </ul>
-                    //这里不推荐下面的写法 prop要遵守单向数据流动规则
-                    <button @click='parr.push("four")'>添加</button>
-                    <hr>
-                    <button @click='$emit("larger-font",2)'>变大2</button>
-                    <button @click='$emit("larger-font",10)'>变大10</button>
-                    <button @click='$emit("larger-font",-2)'>变小2</button>
+                    <div>TOM:{{num}}</div>
+                    <div>
+                        <button @click='handle'>点击</button>
+                    </div>
                 </div>
-            `
-        })
+            `,
+            methods: {
+                handle: function () {
+                    //触发兄弟组件的事件
+                    hub.$emit('jerry-event',1)
+                }
+            },
+            mounted: function () {
+                hub.$on('tom-event', (val) => {
+                    this.num += val;
+                })
+            }
+        });
+        Vue.component('test-jerry', {
+            props: ['parr'],
+            data: function () {
+                return {
+                    num: 0
+                }
+            },
+            template: `
+                <div>
+                    <div>JERRY:{{num}}</div>
+                    <div>
+                        <button @click='handle'>点击</button>
+                    </div>
+                </div>
+            `,
+            methods: {
+                handle: function () {
+                    hub.$emit('tom-event',3)
+                }
+            },
+            mounted: function () {
+                hub.$on('jerry-event', (val) => {
+                    this.num += val;
+                })
+            }
+        });
         var vm = new Vue({
             el: "#app",
             data: {
-                pmsg: '父组件中的内容',
-                parr: ['one', 'two', 'three'],
-                fontSize: 10
+                
             },
             methods: {
-                handle: function (val) {
-                    this.fontSize += val;
+                handle: function () {
+                    //销毁
+                    hub.$off('tom-event');
+                    hub.$off('jerry-event');
                 }
             }
+
         })
     </script>
 </body>
