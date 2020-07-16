@@ -14,29 +14,43 @@
 
 <body>
     <div id="app">
-        <menu-item title="niha" :hao='pi'></menu-item>
-        <menu-item :title="msg1" :likes='52' ok="niu"> </menu-item>
+        <div :style='{fontSize:fontSize+"px"}'>{{pmsg}}</div>
+        <menu-item :parr='parr' v-on:larger-font='handle'></menu-item>
+
     </div>
     <script>
+        // prop要遵守单向数据流动规则
         Vue.component('menu-item', {
-            props: ['title', 'likes','ok','hao'],
+            props: ['parr'],
             data: function () {
                 return {
                     msg: 'nima'
                 }
             },
             template: `
-                <div>{{msg+'**'+title+'**'+likes+'**'+ok+'**'+hao}}</div>
+                <div>
+                    <ul>
+                        <li :key='index' v-for='(item,index) in parr'>{{item}}</li>
+                    </ul>
+                    //这里不推荐下面的写法 prop要遵守单向数据流动规则
+                    <button @click='parr.push("four")'>添加</button>
+                    <hr>
+                    <button @click='$emit("larger-font")'>变大</button>
+                </div>
             `
         })
         var vm = new Vue({
             el: "#app",
             data: {
-                msg1: 'haha',
-                pi:'gepi'
+                pmsg: '父组件中的内容',
+                parr: ['one', 'two', 'three'],
+                fontSize: 10
             },
-            components: {
-
+            methods: {
+                handle: function () {
+                    console.log(2)
+                    this.fontSize += 3;
+                }
             }
         })
     </script>
