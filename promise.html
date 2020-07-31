@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        //fetch基本用法
+        fetch('http://localhost:3000/f').then(function(data){
+            // text()方法属于fetchAPI的一部分，它返回一个Promise实例对象，用于获取后台返回的数据
+            return data.text();
+        }).then(function(data){
+            console.log(data);
+        },function(err){
+            console.log(err+'出错了');
+        })
+    
+    </script>
+    <script>
+        function queryData(url) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState !== 4) return;
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        resolve(xhr.responseText);
+                    } else {
+                        reject('服务器错误');
+                    }
+                };
+                xhr.open('get', url);
+                xhr.send(null);
+            });
+        }
+    </script>
+    <script>
+        var p = new Promise(function (resolve, reject) {
+            var fork = 0;
+            if (fork) {
+                resolve("对了");
+            } else {
+                reject("错了");
+            }
+
+        });
+        p.then(function (res) {
+            console.log(res + 1)
+        }).catch(function (data) {
+            console.log(data)
+        })
+    </script>
+</body>
+
+</html>
